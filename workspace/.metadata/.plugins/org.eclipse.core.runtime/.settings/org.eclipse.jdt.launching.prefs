@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.launching.PREF_CONNECT_TIMEOUT=20000
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1552269803564" defaultVMConnector\="">\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n        <vm id\="1552092967938" name\="jdk-11.0.2" path\="/home/adelson/C\:\\Program Files\\Java\\jdk-11.0.2"/>\n        <vm id\="1552269803564" javadocURL\="https\://docs.oracle.com/en/java/javase/11/docs/api/" name\="java11" path\="/usr/src/jvm/java11"/>\n    </vmType>\n</vmSettings>\n
+org.eclipse.jdt.launching.only_include_exported_classpath_entries=false

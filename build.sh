@@ -1,7 +1,7 @@
 #!/bin/bash
 
 imagem='adelsoncouto/sts-spring-boot'
-versao='1.0.20'
+versao='1.0.21'
 
 ok=$(docker images --format "{{.Repository}}:{{.Tag}}"| grep $imagem:$versao | wc -l)
 
@@ -16,6 +16,10 @@ container_ip='100'
 
 
 if [[ -n "$1" ]]; then
+	if [[ "$1" = "--help" ]];then
+		echo './build [container] [ultimo_octeto_IPv4]'
+		exit 0
+	fi
 	container_name="$1"
 fi
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 imagem='adelsoncouto/sts-spring-boot'
-versao='1.0.22'
+versao='1.0.23'
 
 ok=$(docker images --format "{{.Repository}}:{{.Tag}}"| grep $imagem:$versao | wc -l)
 

@@ -12,25 +12,25 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y \
-    curl \
-    sudo \
-    locales \
-    libgtk-3-0 \
-    libxext-dev \
-    libxrender-dev \
-    libxtst-dev \
-    jq \
-    iproute2 \
-    vim \
-    libnss3-dev \
-    iputils-ping \
-    libgtk2.0-dev \
-    libnotify-dev \
-    chromium-chromedriver \
-    chromium-browser \
-    libcurl4 \
-    openssl \
-    git \
+  curl \
+  sudo \
+  locales \
+  libgtk-3-0 \
+  libxext-dev \
+  libxrender-dev \
+  libxtst-dev \
+  jq \
+  iproute2 \
+  vim \
+  libnss3-dev \
+  iputils-ping \
+  libgtk2.0-dev \
+  libnotify-dev \
+  chromium-chromedriver \
+  chromium-browser \
+  libcurl4 \
+  openssl \
+  git \
   && sed -i -e 's/# en_US.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen \
   && locale-gen pt_BR.UTF-8
 
@@ -91,7 +91,7 @@ RUN mkdir -p /usr/src/mongodb \
   && rm -rf mongodb.tgz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
   && chmod +x /usr/src/mongodb/bin -R 
-  
+
 # sts
 RUN mkdir -p /usr/src/sts \
   && cd /usr/src/sts \
@@ -118,7 +118,9 @@ RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /tmp/* \
   && mkdir -p /usr/src/init \
-  && echo 'PATH="/usr/src/jvm/java/bin:/usr/src/mvn/bin:/usr/src/mongodb/bin:'"$PATH"'"' > /etc/environment
+  && ln -s /usr/src/jvm/java/bin/* /usr/local/sbin/ \
+  && ln -s /usr/src/mvn/bin/* /usr/local/sbin/ \
+  && ln -s /usr/src/mongodb/bin/* /usr/local/sbin/
 
 # script inicial
 COPY ./workspace /tmp/workspace

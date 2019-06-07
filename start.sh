@@ -12,7 +12,7 @@ echo "$USER_NAME"' ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # imprimo a ajuda ajuda
 echo 'Para usar digite um dos seguintes comandos (use o & para não travar o terminal): '
 echo '  sts          - Abre o STS'
-echo '  devdb        - Abre o dbeaver'
+echo '  dbeaver      - Abre o dbeaver'
 echo '  mvn          - Executa o maven'
 
 # configuro o path

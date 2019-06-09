@@ -1,7 +1,7 @@
 #!/bin/bash
 
 imagem='adelsoncouto/sts-spring-boot'
-versao='1.0.27'
+versao='1.0.28'
 
 ok=$(docker images --format "{{.Repository}}:{{.Tag}}"| grep $imagem:$versao | wc -l)
 
@@ -16,15 +16,15 @@ container_ip='100'
 
 
 if [[ -n "$1" ]]; then
-	if [[ "$1" = "--help" ]];then
-		echo './build [container] [ultimo_octeto_IPv4]'
-		exit 0
-	fi
-	container_name="$1"
+  if [[ "$1" = "--help" ]];then
+    echo './build [container] [ultimo_octeto_IPv4]'
+    exit 0
+  fi
+  container_name="$1"
 fi
 
 if [[ -n "$2" ]]; then
-	container_ip="$2"
+  container_ip="$2"
 fi
 
 #  --memory=4G \
@@ -36,6 +36,7 @@ docker run -it --rm \
   -v /home/adelson/trabalho:/media/trabalho \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -e DISPLAY \
+  -e TERM='xterm-256color' \
   -e USER_ID=1000 \
   -e USER_NAME=adelson \
   -e USER_FULL='Adelson Silva Couto' \

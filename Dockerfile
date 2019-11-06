@@ -84,36 +84,16 @@ RUN mkdir -p /usr/src/mongodb \
 # sts
 RUN mkdir -p /usr/src/sts \
   && cd /usr/src/sts \
-  && curl -fSL 'http://download.springsource.com/release/STS4/4.1.1.RELEASE/dist/e4.10/spring-tool-suite-4-4.1.1.RELEASE-e4.10.0-linux.gtk.x86_64.tar.gz' -o sts.tar.gz \
+  && curl -fSL 'https://download.springsource.com/release/STS4/4.4.1.RELEASE/dist/e4.13/spring-tool-suite-4-4.4.1.RELEASE-e4.13.0-linux.gtk.x86_64.tar.gz' -o sts.tar.gz \
   && tar -zxf sts.tar.gz \
   && rm -rf sts.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
   && chmod +x /usr/src/sts/SpringToolSuite4
 
-# openjdk 11
-RUN mkdir -p /usr/src/jvm/java11 \
-  && cd /usr/src/jvm/java11 \
-  && curl -fSL https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz -o java.tar.gz \
-  && tar -zxf java.tar.gz \
-  && rm -rf java.tar.gz \
-  && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
-  && cd /usr/src/jvm \
-  && chmod +x /usr/src/jvm/java11/bin -R
-
-# openjdk 12
-RUN mkdir -p /usr/src/jvm/java12 \
-  && cd /usr/src/jvm/java12 \
-  && curl -fSL https://download.java.net/java/GA/jdk12.0.1/69cfe15208a647278a19ef0990eea691/12/GPL/openjdk-12.0.1_linux-x64_bin.tar.gz -o java.tar.gz \
-  && tar -zxf java.tar.gz \
-  && rm -rf java.tar.gz \
-  && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
-  && cd /usr/src/jvm \
-  && chmod +x /usr/src/jvm/java12/bin -R 
-  
 # openjdk 13
 RUN mkdir -p /usr/src/jvm/java13 \
   && cd /usr/src/jvm/java13 \
-  && curl -fSL https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz -o java.tar.gz \
+  && curl -fSL 'https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz' -o java.tar.gz \
   && tar -zxf java.tar.gz \
   && rm -rf java.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
@@ -124,7 +104,7 @@ RUN mkdir -p /usr/src/jvm/java13 \
 # dbeaver
 RUN mkdir /usr/src/dbeaver \
   && cd /usr/src/dbeaver \
-  && curl -fSL https://dbeaver.io/files/6.0.5/dbeaver-ce-6.0.5-linux.gtk.x86_64.tar.gz -o dbeaver.tar.gz \
+  && curl -fSL 'https://dbeaver.io/files/6.2.4/dbeaver-ce-6.2.4-linux.gtk.x86_64.tar.gz' -o dbeaver.tar.gz \
   && tar -zxf dbeaver.tar.gz \
   && rm -rf dbeaver.tar.gz \
   && mv dbeaver dbeaver-dir \

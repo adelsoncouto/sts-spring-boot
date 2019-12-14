@@ -104,7 +104,7 @@ RUN mkdir -p /usr/src/jvm/java13 \
 # dbeaver
 RUN mkdir /usr/src/dbeaver \
   && cd /usr/src/dbeaver \
-  && curl -fSL 'https://dbeaver.io/files/6.2.4/dbeaver-ce-6.2.4-linux.gtk.x86_64.tar.gz' -o dbeaver.tar.gz \
+  && curl -fSL 'https://dbeaver.io/files/6.3.0/dbeaver-ce-6.3.0-linux.gtk.x86_64.tar.gz' -o dbeaver.tar.gz \
   && tar -zxf dbeaver.tar.gz \
   && rm -rf dbeaver.tar.gz \
   && mv dbeaver dbeaver-dir \

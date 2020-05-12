@@ -8,7 +8,7 @@ if [[ ! -d '/home/'"$USER_NAME" ]];then
 	mkdir -p '/home/'"$USER_NAME"
 fi
 
-# crio usuario
+# crio usuario  
 useradd -u $USER_ID -r -d '/home/'"$USER_NAME" -g "$USER_NAME" -p root -s /bin/bash -c "$USER_FULL" "$USER_NAME"
 
 # permissoes do usuario
@@ -30,6 +30,6 @@ if [[ ! -d '/home/'"$USER_NAME"'/.eclipse' ]];then
   chown $USER_NAME:$USER_NAME '/home/'"$USER_NAME" -R
 fi
 
+
 # mudo para o usuario criado
 su  $USER_NAME
-

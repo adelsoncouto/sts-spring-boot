@@ -30,6 +30,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   chromium-browser \
   libcurl4 \
   openssl \
+  openvpn \
+  subversion \
+  nginx \
   git \
   && sed -i -e 's/# en_US.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen \
   && locale-gen pt_BR.UTF-8
@@ -59,7 +62,8 @@ RUN mkdir -p /usr/src/jvm/java8 \
   && tar -zxf java.tar.gz \
   && rm -rf java.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
-  && chmod +x /usr/src/jvm/java8/bin -R
+  && chmod +x /usr/src/jvm/java8/bin -R\
+  && ln -s /usr/src/jvm/java8 java 
 
 # maven
 RUN mkdir /usr/src/mvn \
@@ -84,32 +88,58 @@ RUN mkdir -p /usr/src/mongodb \
 # sts
 RUN mkdir -p /usr/src/sts \
   && cd /usr/src/sts \
-  && curl -fSL 'https://download.springsource.com/release/STS4/4.4.1.RELEASE/dist/e4.13/spring-tool-suite-4-4.4.1.RELEASE-e4.13.0-linux.gtk.x86_64.tar.gz' -o sts.tar.gz \
+  && curl -fSL 'https://download.springsource.com/release/STS4/4.6.1.RELEASE/dist/e4.15/spring-tool-suite-4-4.6.1.RELEASE-e4.15.0-linux.gtk.x86_64.tar.gz' -o sts.tar.gz \
   && tar -zxf sts.tar.gz \
   && rm -rf sts.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
   && chmod +x /usr/src/sts/SpringToolSuite4
 
-# openjdk 13
-RUN mkdir -p /usr/src/jvm/java13 \
-  && cd /usr/src/jvm/java13 \
-  && curl -fSL 'https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz' -o java.tar.gz \
+# openjdk 14
+RUN mkdir -p /usr/src/jvm/java14 \
+  && cd /usr/src/jvm/java14 \
+  && curl -fSL 'https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz' -o java.tar.gz \
   && tar -zxf java.tar.gz \
   && rm -rf java.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
   && cd /usr/src/jvm \
-  && chmod +x /usr/src/jvm/java13/bin -R \
-  && ln -s /usr/src/jvm/java13 java 
+  && chmod +x /usr/src/jvm/java14/bin -R 
 
 # dbeaver
 RUN mkdir /usr/src/dbeaver \
   && cd /usr/src/dbeaver \
-  && curl -fSL 'https://dbeaver.io/files/6.3.0/dbeaver-ce-6.3.0-linux.gtk.x86_64.tar.gz' -o dbeaver.tar.gz \
+  && curl -fSL 'https://dbeaver.io/files/7.0.4/dbeaver-ce-7.0.4-linux.gtk.x86_64.tar.gz' -o dbeaver.tar.gz \
   && tar -zxf dbeaver.tar.gz \
   && rm -rf dbeaver.tar.gz \
   && mv dbeaver dbeaver-dir \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
   && chmod +x /usr/src/dbeaver/dbeaver
+
+# instalo o nodejs
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends nodejs
+
+# instalo outros complementos
+RUN npm install -g npm \
+  && npm install -g cordova \
+  && npm install -g typescript \
+  && npm install -g @angular/cli \
+  && npm install -g ionic \
+  && npm install -g gulp-cli
+
+# instalo yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update \
+  && apt-get install yarn \
+  && apt-get install --no-install-recommends yarn
+
+# instala chrome
+RUN curl -L https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
+  && apt-get update \
+  && apt-get -y install google-chrome-stable dbus-x11 packagekit-gtk3-module libcanberra-gtk-module firefox -y \
+  && mkdir /var/run/dbus/
 
 # remove temporário
 RUN apt-get clean \
@@ -126,6 +156,9 @@ RUN apt-get clean \
 COPY ./workspace /tmp/workspace
 COPY ./start.sh /usr/src/init/start.sh
 RUN chmod +x /usr/src/init/start.sh
+RUN mkdir -p /dev/net \
+  && mknod /dev/net/tun c 10 200 \
+  && chmod 600 /dev/net/tun
 
 # inicia o bash
-CMD ["/usr/src/init/start.sh"]
+CMD sudo dbus-daemon --system --fork && /usr/src/init/start.sh

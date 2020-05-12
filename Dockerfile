@@ -62,7 +62,7 @@ RUN mkdir -p /usr/src/jvm/java8 \
   && tar -zxf java.tar.gz \
   && rm -rf java.tar.gz \
   && for n in $(ls);do mv ./$n/* ./;rm -rf ./$n;done \
-  && chmod +x /usr/src/jvm/java8/bin -R\
+  && chmod +x /usr/src/jvm/java8/bin -R \
   && ln -s /usr/src/jvm/java8 java 
 
 # maven

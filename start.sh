@@ -31,5 +31,10 @@ if [[ ! -d '/home/'"$USER_NAME"'/.eclipse' ]];then
 fi
 
 
+mkdir -p /dev/net
+mknod /dev/net/tun c 10 200
+chmod 600 /dev/net/tun
+
 # mudo para o usuario criado
 su  $USER_NAME
+
